@@ -1,0 +1,10 @@
+fastapi>=0.115,<1
+uvicorn[standard]>=0.32,<1
+httpx>=0.28,<1
+beautifulsoup4>=4.12,<5
+yt-dlp>=2025.1.1
+curl-cffi>=0.7,<1
+playwright>=1.49,<2
+imageio-ffmpeg>=0.5,<1
+pydantic>=2.9,<3
+python-multipart>=0.0.12

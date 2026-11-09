@@ -1,0 +1,9 @@
+.venv/
+.tmp/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.DS_Store
+ui-preview*.png
+ui-mobile.png

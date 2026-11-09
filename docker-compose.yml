@@ -1,0 +1,17 @@
+services:
+  shipin:
+    build: .
+    ports:
+      - "8765:8000"
+    environment:
+      TEMP_DIR: /app/.tmp
+      MAX_DOWNLOAD_MB: ${MAX_DOWNLOAD_MB:-2048}
+      MAX_MEDIA_ITEMS: ${MAX_MEDIA_ITEMS:-40}
+      SNIFF_TIMEOUT_SECONDS: ${SNIFF_TIMEOUT_SECONDS:-45}
+      JOB_TTL_SECONDS: ${JOB_TTL_SECONDS:-7200}
+      ENABLE_PLAYWRIGHT: ${ENABLE_PLAYWRIGHT:-1}
+      ALLOW_PRIVATE_NETWORK: ${ALLOW_PRIVATE_NETWORK:-0}
+    volumes:
+      - ./.tmp:/app/.tmp
+    shm_size: "1gb"
+    restart: unless-stopped

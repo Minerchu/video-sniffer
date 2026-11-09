@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08080e">
+  <meta name="description" content="粘贴网页链接或抖音/TikTok分享文案，自动嗅探页面中的视频和音频，支持 MP4、M3U8、FLV、WebM、MP3 等格式。">
+  <title>拾影 · 网页视频嗅探下载</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <div class="aurora aurora-a"></div>
+    <div class="aurora aurora-b"></div>
+    <div class="grid-lines"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="拾影首页">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12 8 5.2Z" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-name">拾影</span>
+      <span class="brand-tag">VIDEO SNIFFER</span>
+    </a>
+    <nav class="topnav">
+      <a href="#how">使用方式</a>
+      <a href="#limits">能力边界</a>
+      <button id="theme-btn" class="icon-btn" type="button" aria-label="切换主题" title="切换主题">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z" fill="currentColor"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="pulse-dot"></span> 自动识别 MP4 / M3U8 / FLV / WebM / MP3</div>
+      <h1>粘贴链接，<br><span class="gradient-text">把页面里的视频带走。</span></h1>
+      <p class="lede">自动嗅探网页中的视频与音频，手机端也能监听播放器的网络请求。抖音/TikTok 支持分享文案与去水印下载，HLS 自动合并成 MP4。</p>
+
+      <form id="parse-form" class="search-form" novalidate>
+        <div class="input-wrap">
+          <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 13.4a4.5 4.5 0 0 0 6.4 0l2.1-2.1a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2M13.4 10.6a4.5 4.5 0 0 0-6.4 0l-2.1 2.1a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input id="url-input" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="粘贴网页链接，或抖音/TikTok分享文案" aria-label="网页链接或分享文案" required>
+          <button id="paste-btn" class="paste-btn" type="button">粘贴</button>
+        </div>
+        <button id="parse-btn" class="parse-btn" type="submit">
+          <span class="btn-label">开始解析</span>
+          <span class="spinner" hidden></span>
+        </button>
+      </form>
+
+      <details class="advanced">
+        <summary>需要登录或防盗链的网站？展开高级设置</summary>
+        <div class="advanced-grid">
+          <label>
+            <span>Cookie</span>
+            <textarea id="cookie-input" rows="3" placeholder="从浏览器开发者工具复制 Cookie，例如：SESSDATA=...; bili_jct=..." spellcheck="false"></textarea>
+            <small>只随本次请求发送，不写入服务器磁盘。</small>
+          </label>
+          <label>
+            <span>Referer <em>可选</em></span>
+            <input id="referer-input" type="url" placeholder="https://www.example.com/" spellcheck="false">
+            <small>部分站点的媒体地址会校验来源页。</small>
+          </label>
+        </div>
+      </details>
+
+      <div id="status-panel" class="status-panel" hidden>
+        <span class="status-dot"></span>
+        <span id="status-text">正在准备…</span>
+      </div>
+
+      <div class="hero-meta">
+        <span>无需安装 App</span>
+        <span>浏览器网络监听</span>
+        <span>M3U8 合并 MP4</span>
+      </div>
+    </section>
+
+    <section id="results" class="results" hidden aria-live="polite">
+      <div class="section-head">
+        <div class="result-heading">
+          <p class="kicker">解析结果</p>
+          <h2 id="result-title">已发现媒体</h2>
+          <p id="result-sub" class="muted"></p>
+        </div>
+        <div id="engine-chips" class="engine-chips"></div>
+      </div>
+      <div id="result-grid" class="result-grid"></div>
+      <details id="warnings" class="warnings" hidden>
+        <summary>解析提示 <span id="warning-count"></span></summary>
+        <ul id="warning-list"></ul>
+      </details>
+    </section>
+
+    <section id="history" class="history" hidden>
+      <div class="section-head compact">
+        <div>
+          <p class="kicker">最近解析</p>
+          <h2>继续看看</h2>
+        </div>
+        <button id="clear-history" class="text-btn" type="button">清空</button>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+
+    <section id="how" class="steps">
+      <div class="section-head compact">
+        <div>
+          <p class="kicker">使用方式</p>
+          <h2>三步拿到文件</h2>
+        </div>
+      </div>
+      <div class="step-grid">
+        <article class="step-card">
+          <span class="step-no">01</span>
+          <h3>粘贴网页链接</h3>
+          <p>视频页、文章页、短视频分享页都可以；抖音/TikTok 可直接粘贴整段分享文案。需要登录的站点先展开高级设置填 Cookie。</p>
+        </article>
+        <article class="step-card">
+          <span class="step-no">02</span>
+          <h3>自动嗅探资源</h3>
+          <p>站点解析、网页源码、手机浏览器网络监听同时工作，合并去重后列出可下载媒体。</p>
+        </article>
+        <article class="step-card">
+          <span class="step-no">03</span>
+          <h3>选择画质下载</h3>
+          <p>直链直接保存；M3U8 或分轨视频会交给后台合并，完成后从任务按钮下载 MP4 或 MP3。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="limits" class="limits">
+      <div class="limit-card">
+        <div>
+          <p class="kicker">能力边界</p>
+          <h2>能做什么，不能做什么</h2>
+        </div>
+        <ul class="limit-list">
+          <li><strong>能：</strong>普通网页视频、音频直链、HLS/M3U8 流、抖音去水印、TikTok 无水印、B站等站点。</li>
+          <li><strong>不能：</strong>破解 DRM、付费墙、登录权限或版权保护。加密流需要正版密钥才能播放和保存。</li>
+          <li><strong>需要：</strong>登录内容请提供自己的 Cookie；部分站点仍有频率限制或风控，解析失败时可稍后重试。</li>
+          <li><strong>提醒：</strong>请只下载你有权保存的内容，并遵守目标网站的服务条款和当地法律。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand"><span class="brand-mark small"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12 8 5.2Z" fill="currentColor"/></svg></span> 拾影</div>
+    <p>一个自托管的网页媒体嗅探工具。仅供个人备份与授权内容使用。</p>
+  </footer>
+
+  <template id="card-template">
+    <article class="media-card">
+      <div class="thumb">
+        <img alt="" loading="lazy">
+        <div class="thumb-fallback" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8 5.2v13.6L19 12 8 5.2Z" fill="currentColor"/></svg>
+        </div>
+        <span class="kind-badge"></span>
+        <span class="duration-badge"></span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title"></h3>
+        <div class="card-meta"></div>
+        <p class="card-note" hidden></p>
+        <div class="card-actions">
+          <button class="download-btn" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v2.2c0 .4.4.8.8.8h12.4c.4 0 .8-.4.8-.8V17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="download-label">下载文件</span>
+          </button>
+          <button class="copy-btn" type="button">复制链接</button>
+        </div>
+        <div class="job-progress" hidden>
+          <div class="bar"><i></i></div>
+          <span class="job-text">准备下载…</span>
+        </div>
+        <a class="job-file" hidden>文件已生成，点此下载</a>
+      </div>
+    </article>
+  </template>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
