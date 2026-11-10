@@ -74,6 +74,11 @@ async def index() -> FileResponse:
     return FileResponse(config.STATIC_DIR / "index.html", headers={"Cache-Control": "no-cache"})
 
 
+@app.get("/quick", include_in_schema=False)
+async def quick() -> FileResponse:
+    return FileResponse(config.STATIC_DIR / "quick.html", headers={"Cache-Control": "no-cache"})
+
+
 @app.get("/api/health")
 async def health() -> dict:
     try:

@@ -735,3 +735,33 @@ footer p { margin: 0; line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
 }
+
+/* iOS quick page */
+.quick-main { width: min(820px, calc(100% - 36px)); margin: 0 auto; padding: 0 0 60px; }
+.quick-hero { padding: 56px 0 10px; text-align: center; }
+.quick-hero h1 { margin: 10px 0 0; font-size: clamp(34px, 6vw, 54px); line-height: 1.1; letter-spacing: -0.04em; }
+.quick-hero .lede { max-width: 620px; margin-left: auto; margin-right: auto; }
+.quick-card { margin-top: 22px; padding: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); text-align: left; backdrop-filter: blur(18px); }
+.quick-card textarea { width: 100%; min-height: 112px; border: 1px solid var(--border); border-radius: 14px; outline: 0; background: rgba(0, 0, 0, 0.18); color: var(--text); padding: 14px; font-size: 14px; line-height: 1.6; resize: vertical; }
+.quick-card textarea:focus { border-color: rgba(167, 139, 250, 0.5); }
+body[data-theme="light"] .quick-card textarea { background: rgba(255, 255, 255, 0.7); }
+.quick-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 14px; }
+.quick-results { padding: 34px 0 10px; }
+.quick-list { display: grid; gap: 12px; }
+.quick-item { padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--panel); }
+.quick-item h3 { margin: 0; font-size: 14px; line-height: 1.45; overflow-wrap: anywhere; }
+.quick-item-meta { margin: 6px 0 0; color: var(--muted); font-size: 12px; }
+.quick-item .quick-actions { margin-top: 12px; }
+.quick-progress { color: var(--muted); font-size: 12px; }
+.quick-help { padding: 48px 0 10px; }
+.quick-steps { margin: 18px 0 0; padding-left: 22px; color: var(--muted); font-size: 13px; line-height: 1.9; }
+.quick-steps strong { color: var(--text); }
+.quick-steps code { color: var(--accent-2); font-size: 12px; overflow-wrap: anywhere; }
+.quick-note { color: var(--muted-2); font-size: 12px; line-height: 1.7; margin-top: 14px; }
+.quick-dl { min-height: 38px; padding: 0 16px; font-size: 12.5px; border-radius: 12px; }
+a.quick-link { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; min-height: 40px; }
+@media (max-width: 760px) {
+  .quick-main { width: calc(100% - 28px); }
+  .quick-hero { padding-top: 36px; }
+  .quick-card { padding: 14px; }
+}

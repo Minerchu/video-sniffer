@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08080e">
+  <title>??? ? ??</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body data-theme="dark">
+  <div class="backdrop" aria-hidden="true">
+    <div class="aurora aurora-a"></div>
+    <div class="aurora aurora-b"></div>
+    <div class="grid-lines"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="??????">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12 8 5.2Z" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-name">??</span>
+      <span class="brand-tag">QUICK</span>
+    </a>
+    <nav class="topnav">
+      <a href="/">???</a>
+      <a href="#help">????</a>
+    </nav>
+  </header>
+
+  <main class="quick-main">
+    <section class="quick-hero">
+      <p class="kicker">iPhone ????</p>
+      <h1>?????<span class="gradient-text">????</span></h1>
+      <p class="lede">??? / TikTok / ?????????????????????????? 1080P?TikTok ???? MP4 ? MP3?</p>
+
+      <div class="quick-card">
+        <textarea id="quick-input" rows="4" placeholder="???????????" spellcheck="false"></textarea>
+        <div class="quick-actions">
+          <button id="quick-paste" class="paste-btn" type="button">??????</button>
+          <button id="quick-parse" class="parse-btn" type="button">
+            <span class="btn-label">????</span>
+            <span class="spinner" hidden></span>
+          </button>
+        </div>
+        <div id="quick-status" class="status-panel" hidden>
+          <span class="status-dot"></span>
+          <span id="quick-status-text">?????</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="quick-results" class="quick-results" hidden aria-live="polite">
+      <div class="section-head compact">
+        <div>
+          <p class="kicker">????</p>
+          <h2 id="quick-title">?????</h2>
+          <p id="quick-sub" class="muted"></p>
+        </div>
+        <a class="text-btn" href="/">?????</a>
+      </div>
+      <div id="quick-list" class="quick-list"></div>
+    </section>
+
+    <section id="help" class="quick-help">
+      <div class="section-head compact">
+        <div>
+          <p class="kicker">?????</p>
+          <h2>???? iOS ????</h2>
+        </div>
+      </div>
+      <ol class="quick-steps">
+        <li>?? iPhone??????App????? <strong>+</strong> ???</li>
+        <li>???????? <strong>????????</strong>???????? <strong>URL</strong> ? <strong>??</strong>?</li>
+        <li>???? <strong>URL ??</strong>?????????????</li>
+        <li>???? <strong>??</strong>???? <code>https://video.8888fafa.me/quick?text=</code>?????????????</li>
+        <li>???? <strong>?? URL</strong>?????????????????????</li>
+      </ol>
+      <p class="quick-note">????????? ? ?? ? ??????????????????????????????????????</p>
+      <div class="quick-actions">
+        <a class="parse-btn quick-link" href="/quick">??????</a>
+        <a class="paste-btn quick-link" href="/">?????</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand"><span class="brand-mark small"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12 8 5.2Z" fill="currentColor"/></svg></span> ??</div>
+    <p>??????????????</p>
+  </footer>
+
+  <div id="quick-toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/static/quick.js" defer></script>
+</body>
+</html>
